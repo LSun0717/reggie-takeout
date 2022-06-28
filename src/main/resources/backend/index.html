@@ -35,6 +35,7 @@
             <img src="images/login/login-logo.png" alt="" style="width: 117px; height: 32px" />
           </div>
 
+<!--          index页面左侧menu选择列表，通过绑定menuList数据模型进行相应展示-->
           <el-scrollbar wrap-class="scrollbar-wrapper">
             <el-menu
               :default-active="defAct"
@@ -196,6 +197,7 @@
           menuHandle(item, goBackFlag) {
             this.loading = true
             this.menuActived = item.id
+            // 绑定menuList中url属性进行对应url切换
             this.iframeUrl = item.url
             this.headTitle = item.name
             this.goBackFlag = goBackFlag
