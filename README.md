@@ -16,8 +16,9 @@ if this project is helpful for you, I'll feel nice!
 - Spring Boot
 - Mybatis-Plus
 - lombok
-- Sl4j
+- Slf4j
 - Mysql
+- tomcat
 
 #### frontend
 - Vue
