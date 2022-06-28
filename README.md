@@ -11,8 +11,10 @@ if this project is helpful for you, I'll feel nice!
 2. add employee
    - global exception handler
    
-
-### The technology involved
+3. employee pagination queries
+   - Mybatis Plus pagination interceptor
+   
+### The technology involvedc
 
 frontend < --RESTful Api-- > backend
 
