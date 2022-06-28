@@ -94,4 +94,18 @@ public class EmployeeController {
         httpServletRequest.getSession().removeAttribute("employee");
         return R.success("退出成功");
     }
+
+    /*
+    * @description:新增员工
+    * @param employee
+    * @return: * @return R<String>
+    * @author: uncle_longgggggg
+    * @time: 6/28/2022 4:38 PM
+     */
+    @PostMapping
+    public R<String> save(@RequestBody Employee employee) {
+        log.info("新增员工， 员工信息：{}", employee.toString());
+        employeeService.save(employee);
+        return R.success("新增员工成功");
+    }
 }
