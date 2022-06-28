@@ -8,10 +8,13 @@ if this project is helpful for you, I'll feel nice!
 1. user login\logout
      - check the user login status
    
+2. add employee
+   - global exception handler
+   
 
 ### The technology involved
 
-backend < --RESTful规范-- > frontend
+frontend < --RESTful Api-- > backend
 
 #### backend
 - Spring
