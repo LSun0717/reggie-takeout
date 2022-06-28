@@ -67,14 +67,14 @@ public class LoginCheckFilter implements Filter {
 
     }
 
+
     /*
-     * @description:检查本次请求是否需要放行
-     * @param: servletRequest
-     * @param: servletResponse
-     * @param: filterChain
-     * @return:
-     * @author: uncle_longgggggg
-     * @time: 6/28/2022 11:14 AM
+    * @description:检查当前登录情况
+    * @param urls
+    * @param requestURI
+    * @return: * @return boolean
+    * @author: uncle_longgggggg
+    * @time: 6/28/2022 4:18 PM
      */
     public boolean checkNotLoginUrl (String[] urls, String requestURI){
         for (String url : urls) {

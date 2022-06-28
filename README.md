@@ -10,6 +10,9 @@ if this project is helpful for you, I'll feel nice!
    
 
 ### The technology involved
+
+backend < --RESTful规范-- > frontend
+
 #### backend
 - Spring
 - Spring MVC
