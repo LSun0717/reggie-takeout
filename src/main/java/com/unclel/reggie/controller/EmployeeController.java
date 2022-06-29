@@ -43,15 +43,6 @@ public class EmployeeController {
     @PostMapping("/login")
     public R<Employee> login(HttpServletRequest request, @RequestBody Employee employee){
 
-        /*
-          ○ 将页面提交的密码password进行md5加密处理
-          ○ 根据页面提交的用户名username查询数据库
-          ○ 如果没有查询到则返回登陆失败结果
-          ○ 密码比对，如果不一致则返回登录失败结果
-          ○ 查看员工状态，如果为已禁用状态，则返回员工已禁用结果
-          ○ 登陆成功，将员工id存入Session并返回登陆成功结果
-         */
-
 //      将页面提交的密码password进行md5加密处理
         String password = employee.getPassword();
         password = DigestUtils.md5DigestAsHex(password.getBytes());
@@ -146,5 +137,23 @@ public class EmployeeController {
         employeeService.page(pageInfo, employeeLambdaQueryWrapper);
 
         return R.success(pageInfo);
+    }
+
+    /*
+    * @description:根据id修改员工信息
+    * @param employee
+    * @return: * @return R<String>
+    * @author: uncle_longgggggg
+    * @time: 6/29/2022 10:24 AM
+     */
+    @PutMapping()
+    public R<String> update(HttpServletRequest httpServletRequest, @RequestBody Employee employee) {
+        Long empId = (Long) httpServletRequest.getSession().getAttribute("employee");
+        // 设置更新时间以及执行更新的人
+        employee.setUpdateUser(empId);
+        employee.setUpdateTime(LocalDateTime.now());
+
+        employeeService.updateById(employee);
+        return R.success("员工信息修改成功");
     }
 }
