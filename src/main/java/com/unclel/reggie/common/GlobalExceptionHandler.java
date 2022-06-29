@@ -34,7 +34,7 @@ public class GlobalExceptionHandler {
         // 处理新建用户时，username同名与mysql username字段唯一而产生的冲突
         if (ex.getMessage().contains("Duplicate entry")) {
             String[] strings = ex.getMessage().split(" ");
-            String msg = strings[2] + ":该用户名已存在";
+            String msg = strings[2] + " 已存在";
             return R.error(msg);
         }
 

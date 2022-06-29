@@ -19,6 +19,8 @@ if this project is helpful for you, I'll feel nice!
    
 5. public fields auto-fill
    - MetaObjectHandler and session sharing base ThreadLocal 
+   
+6. add category
 ### The technology involvedc
 
 frontend < --RESTful Api-- > backend
@@ -32,7 +34,7 @@ frontend < --RESTful Api-- > backend
 - Slf4j
 - Mysql
 - tomcat
-- RESTful Api
+- RESTful Apic
 
 #### frontend
 - Vue
