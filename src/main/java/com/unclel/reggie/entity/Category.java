@@ -10,8 +10,12 @@ import lombok.Setter;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-/**
- * 分类
+/*
+* @description:分类
+* @param null
+* @return:
+* @author: uncle_longgggggg
+* @time: 6/29/2022 3:45 PM
  */
 @Data
 public class Category implements Serializable {
@@ -45,7 +49,7 @@ public class Category implements Serializable {
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private Long updateUser;
 
-    //是否删除
-    private Integer isDeleted;
+//    //是否删除
+//    private Integer isDeleted;
 
 }
