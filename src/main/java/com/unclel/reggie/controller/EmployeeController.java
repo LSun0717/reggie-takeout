@@ -12,6 +12,8 @@ import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
 
 /**
  * @ClassName EmployeeController
@@ -102,8 +104,19 @@ public class EmployeeController {
     * @time: 6/28/2022 4:38 PM
      */
     @PostMapping
-    public R<String> save(@RequestBody Employee employee) {
+    public R<String> save(HttpServletRequest httpServletRequest, @RequestBody Employee employee) {
         log.info("新增员工， 员工信息：{}", employee.toString());
+
+        // 设置经md5加密过后的123456为初始密码
+        employee.setPassword(DigestUtils.md5DigestAsHex("123456".getBytes(StandardCharsets.UTF_8)));
+
+        employee.setCreateTime(LocalDateTime.now());
+        employee.setUpdateTime(LocalDateTime.now());
+        // 从session中获取当前登录用户信息
+        Long empId = (Long) httpServletRequest.getSession().getAttribute("employee");
+        employee.setCreateUser(empId);
+        employee.setUpdateUser(empId);
+
         employeeService.save(employee);
         return R.success("新增员工成功");
     }
