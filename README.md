@@ -13,7 +13,12 @@ if this project is helpful for you, I'll feel nice!
    
 3. employee pagination queries
    - Mybatis Plus pagination interceptor
+
+4. alter employee status
+   - Jackson Object Mapper
    
+5. public fields auto-fill
+   - MetaObjectHandler and session sharing base ThreadLocal 
 ### The technology involvedc
 
 frontend < --RESTful Api-- > backend
@@ -27,6 +32,7 @@ frontend < --RESTful Api-- > backend
 - Slf4j
 - Mysql
 - tomcat
+- RESTful Api
 
 #### frontend
 - Vue
