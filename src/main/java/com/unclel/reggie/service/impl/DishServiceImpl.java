@@ -1,5 +1,6 @@
 package com.unclel.reggie.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.unclel.reggie.dto.DishDto;
 import com.unclel.reggie.entity.Dish;
@@ -9,6 +10,7 @@ import com.unclel.reggie.service.DishFlavorService;
 import com.unclel.reggie.service.DishService;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -47,4 +49,59 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements Di
             dishFlavorService.saveBatch(flavors);
 
     }
+
+    /*
+    * @description:根据id查询DishDto数据返回
+    * @param id
+    * @return: * @return DishDto
+    * @author: uncle_longgggggg
+    * @time: 6/30/2022 8:42 PM
+     */
+    @Override
+    public DishDto getByIdWithFlavour(Long id) {
+
+        Dish dish = this.getById(id);
+
+        // dish与dishDto中差的就是Flavours
+        DishDto dishDto = new DishDto();
+        BeanUtils.copyProperties(dish, dishDto);
+
+        LambdaQueryWrapper<DishFlavor> dishFlavorLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        dishFlavorLambdaQueryWrapper.eq(DishFlavor::getDishId, dish.getId());
+        List<DishFlavor> flavors = dishFlavorService.list(dishFlavorLambdaQueryWrapper);
+
+        dishDto.setFlavors(flavors);
+        return dishDto;
+    }
+
+    /*
+    * @description:更新菜品信息及口味信息
+    * @param dishDto
+    * @return:
+    * @author: uncle_longgggggg
+    * @time: 6/30/2022 9:11 PM
+     */
+    @Override
+    @Transactional
+    public void updateWithFlavor(DishDto dishDto) {
+        // 更新dish基本信息
+        this.updateById(dishDto);
+
+        // 删除原始口味信息
+        LambdaQueryWrapper<DishFlavor> dishFlavorLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        dishFlavorLambdaQueryWrapper.eq(DishFlavor::getDishId, dishDto.getId());
+        dishFlavorService.remove(dishFlavorLambdaQueryWrapper);
+
+        List<DishFlavor> flavors = dishDto.getFlavors();
+
+        // 设置id
+        flavors = flavors.stream().map((item) -> {
+            item.setDishId(dishDto.getId());
+            return item;
+        }).collect(Collectors.toList());
+        // 保存新的口味信息
+        dishFlavorService.saveBatch(flavors);
+
+    }
+
 }
