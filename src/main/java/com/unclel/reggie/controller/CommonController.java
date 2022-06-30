@@ -3,12 +3,17 @@ package com.unclel.reggie.controller;
 import com.unclel.reggie.common.R;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.UUID;
 
@@ -57,6 +62,35 @@ public class CommonController {
             e.printStackTrace();
         }
         return R.success(fileName);
+    }
+
+    /*
+    * @description:文件下载
+    * @param name
+    * @param httpServletResponse
+    * @return:
+    * @author: uncle_longgggggg
+    * @time: 6/30/2022 2:48 PM
+     */
+    @GetMapping("/download")
+    public void download(String name, HttpServletResponse httpServletResponse) {
+        try {
+            // 文件输入流，通过输入流读取文件内容
+            FileInputStream fileInputStream = new FileInputStream(new File(basePath + name));
+            // 输出流，通过输出流将文件写回浏览器，在浏览器展示图片
+            ServletOutputStream outputStream = httpServletResponse.getOutputStream();
+            httpServletResponse.setContentType("image/jpeg");
+            // 输入输出对拷
+            int len = 0;
+            byte[] bytes = new byte[1024];
+            while ((len = fileInputStream.read(bytes)) != -1) {
+                outputStream.write(bytes, 0, len);
+                outputStream.flush();
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }
