@@ -22,7 +22,7 @@ import java.sql.SQLIntegrityConstraintViolationException;
 public class GlobalExceptionHandler {
 
     /*
-    * @description:异常处理方法
+    * @description:新建数据时，插入字段不符合unique约束异常
 
     * @return: * @return R<String>
     * @author: uncle_longgggggg
@@ -41,5 +41,17 @@ public class GlobalExceptionHandler {
         return R.error("未知错误");
     }
 
+    /*
+    * @description:分类与菜品及套餐关联，删除时异常处理
+    * @param exception
+    * @return: * @return R<String>
+    * @author: uncle_longgggggg
+    * @time: 6/29/2022 4:49 PM
+     */
+    @ExceptionHandler(CustomException.class)
+    public R<String> exceptionHandler(CustomException exception) {
+        log.error(exception.getMessage());
+        return R.error(exception.getMessage());
+    }
 
 }

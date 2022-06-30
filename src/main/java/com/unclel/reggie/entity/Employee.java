@@ -6,8 +6,12 @@ import lombok.Data;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-/**
- * 员工实体
+/*
+* @description:员工实体
+* @param null
+* @return:
+* @author: uncle_longgggggg
+* @time: 6/29/2022 4:29 PM
  */
 @Data
 public class Employee implements Serializable {

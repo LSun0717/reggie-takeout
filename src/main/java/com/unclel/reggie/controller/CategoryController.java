@@ -34,7 +34,7 @@ public class CategoryController {
      */
     @PostMapping
     public R<String> save(@RequestBody Category category) {
-        log.info("category:{}", category);
+        log.info("新增分类:{}", category);
         categoryService.save(category);
         return R.success("新增分类成功");
     }
@@ -48,6 +48,7 @@ public class CategoryController {
      */
     @GetMapping("/page")
     public R<Page> page(int page, int pageSize) {
+        log.info("分类分页查询，{}，{}", page ,pageSize);
 
         Page<Category> pageInfo = new Page<>(page, pageSize);
 
@@ -66,9 +67,10 @@ public class CategoryController {
     * @time: 6/29/2022 4:09 PM
      */
     @DeleteMapping
-    public R<String> delete(Long id) {
-
-        return null;
+    public R<String> delete(Long ids) {
+        log.info("删除分类,id：", ids);
+        categoryService.remove(ids);
+        return R.success("分类信息删除成功");
     }
 
 }
