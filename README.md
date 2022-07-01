@@ -1,6 +1,6 @@
 ## reggie-takeout
 ### Introduction
-this is a JavaWeb project about takeout, and I'm still going
+this is a JavaWeb project about takeout, and I'm still going on
 
 if this project is helpful for you, I'll feel nice!
 ### Completed function
@@ -21,6 +21,12 @@ if this project is helpful for you, I'll feel nice!
    - MetaObjectHandler and session sharing base ThreadLocal 
    
 6. add category
+
+7. setmeal management
+
+8. up/down load image
+
+9. aliyun SMS service
 ### The technology involvedc
 
 frontend < --RESTful Api-- > backend
