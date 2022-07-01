@@ -17,7 +17,7 @@ import java.util.UUID;
 
 /**
  * @ClassName CommonController
- * @Description TODO
+ * @Description 菜品图片上传与下载
  * @Author uncle_longgggggg
  * @Date 6/30/2022 1:55 PM
  * @Version 1.0

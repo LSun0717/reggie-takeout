@@ -6,20 +6,16 @@ import com.unclel.reggie.common.R;
 import com.unclel.reggie.dto.DishDto;
 import com.unclel.reggie.entity.Category;
 import com.unclel.reggie.entity.Dish;
-import com.unclel.reggie.entity.DishFlavor;
 import com.unclel.reggie.service.CategoryService;
 import com.unclel.reggie.service.DishFlavorService;
 import com.unclel.reggie.service.DishService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.BeanNameAware;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
-import static jdk.nashorn.internal.runtime.regexp.joni.Config.log;
 
 /**
  * @ClassName DishController
@@ -129,6 +125,29 @@ public class DishController {
         log.info(dishDto.toString());
         dishService.updateWithFlavor(dishDto);
         return R.success("修改菜品成功");
+    }
+
+    /*
+    * @description:根据条件查询对应的菜品数据
+    * @param category
+    * @return: * @return R<Dish>
+    * @author: uncle_longgggggg
+    * @time: 7/1/2022 9:42 AM
+     */
+    @GetMapping("/list")
+    public R<List<Dish>> list(Dish dish) {
+
+        // 构造查询条件
+        LambdaQueryWrapper<Dish> dishLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        dishLambdaQueryWrapper.eq(dish.getCategoryId() != null, Dish::getCategoryId, dish.getCategoryId());
+        // 查询status=1，即起售的菜品
+        dishLambdaQueryWrapper.eq(Dish::getStatus, 1);
+
+        // 构造排序条件
+        dishLambdaQueryWrapper.orderByDesc(Dish::getSort).orderByDesc(Dish::getUpdateTime);
+        List<Dish> dishes = dishService.list(dishLambdaQueryWrapper);
+
+        return R.success(dishes);
     }
 
 }
