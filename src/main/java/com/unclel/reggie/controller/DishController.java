@@ -6,10 +6,12 @@ import com.unclel.reggie.common.R;
 import com.unclel.reggie.dto.DishDto;
 import com.unclel.reggie.entity.Category;
 import com.unclel.reggie.entity.Dish;
+import com.unclel.reggie.entity.DishFlavor;
 import com.unclel.reggie.service.CategoryService;
 import com.unclel.reggie.service.DishFlavorService;
 import com.unclel.reggie.service.DishService;
 import lombok.extern.slf4j.Slf4j;
+import org.ini4j.spi.BeanTool;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -127,15 +129,38 @@ public class DishController {
         return R.success("修改菜品成功");
     }
 
+//    /*
+//    * @description:根据条件查询对应的菜品数据
+//    * @param category
+//    * @return: * @return R<Dish>
+//    * @author: uncle_longgggggg
+//    * @time: 7/1/2022 9:42 AM
+//     */
+//    @GetMapping("/list")
+//    public R<List<Dish>> list(Dish dish) {
+//
+//        // 构造查询条件
+//        LambdaQueryWrapper<Dish> dishLambdaQueryWrapper = new LambdaQueryWrapper<>();
+//        dishLambdaQueryWrapper.eq(dish.getCategoryId() != null, Dish::getCategoryId, dish.getCategoryId());
+//        // 查询status=1，即起售的菜品
+//        dishLambdaQueryWrapper.eq(Dish::getStatus, 1);
+//
+//        // 构造排序条件
+//        dishLambdaQueryWrapper.orderByDesc(Dish::getSort).orderByDesc(Dish::getUpdateTime);
+//        List<Dish> dishes = dishService.list(dishLambdaQueryWrapper);
+//
+//        return R.success(dishes);
+//    }
+
     /*
-    * @description:根据条件查询对应的菜品数据
+    * @description:根据条件查询对应的菜品数据，并进一步封装为dishDto
     * @param category
     * @return: * @return R<Dish>
     * @author: uncle_longgggggg
     * @time: 7/1/2022 9:42 AM
      */
     @GetMapping("/list")
-    public R<List<Dish>> list(Dish dish) {
+    public R<List<DishDto>> list(Dish dish) {
 
         // 构造查询条件
         LambdaQueryWrapper<Dish> dishLambdaQueryWrapper = new LambdaQueryWrapper<>();
@@ -145,9 +170,31 @@ public class DishController {
 
         // 构造排序条件
         dishLambdaQueryWrapper.orderByDesc(Dish::getSort).orderByDesc(Dish::getUpdateTime);
-        List<Dish> dishes = dishService.list(dishLambdaQueryWrapper);
+        List<Dish> dishList = dishService.list(dishLambdaQueryWrapper);
 
-        return R.success(dishes);
+        // 将dish转化为dishDto从而保存菜品口味信息
+        List<DishDto> dishDtoList = dishList.stream().map(item -> {
+            DishDto dishDto = new DishDto();
+            BeanUtils.copyProperties(item, dishDto);
+
+            Category category = categoryService.getById(item.getCategoryId());
+
+            if (category != null) {
+                dishDto.setCategoryName(category.getName());
+            }
+
+            LambdaQueryWrapper<DishFlavor> dishFlavorLambdaQueryWrapper = new LambdaQueryWrapper<>();
+            dishFlavorLambdaQueryWrapper.eq(DishFlavor::getDishId, item.getId());
+
+            List<DishFlavor> dishFlavorList = dishFlavorService.list(dishFlavorLambdaQueryWrapper);
+
+            dishDto.setFlavors(dishFlavorList);
+            return dishDto;
+
+        }).collect(Collectors.toList());
+
+
+        return R.success(dishDtoList);
     }
 
 }

@@ -47,9 +47,9 @@ public class UserController {
 
             String validateCode = ValidateCodeUtils.generateValidateCode(4).toString();
 
-            log.info(validateCode);
+            log.info("验证码：{}",validateCode);
 //            调用阿里云提供短信服务api发送短信
-            SMSUtils.sendSms(phone, validateCode);
+//            SMSUtils.sendSms(phone, validateCode);
 
             httpSession.setAttribute(phone, validateCode);
 

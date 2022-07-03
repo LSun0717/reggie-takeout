@@ -94,4 +94,22 @@ public class SetmealController {
 
         return R.success("删除成功");
     }
+
+    /*
+    * @description:客户端首页展示套餐信息
+    * @param setmeal
+    * @return: * @return R<List<Setmeal>>
+    * @author: uncle_longgggggg
+    * @time: 7/3/2022 1:06 PM
+     */
+    @GetMapping("/list")
+    public R<List<Setmeal>> list(Setmeal setmeal) {
+        LambdaQueryWrapper<Setmeal> setmealLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        setmealLambdaQueryWrapper.eq(setmeal.getCategoryId() != null, Setmeal::getCategoryId,setmeal.getCategoryId());
+        setmealLambdaQueryWrapper.eq(setmeal.getStatus() != null, Setmeal::getStatus,setmeal.getStatus());
+
+        List<Setmeal> setmealList = setmealService.list(setmealLambdaQueryWrapper);
+
+        return R.success(setmealList);
+    }
 }
