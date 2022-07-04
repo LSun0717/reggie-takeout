@@ -6,19 +6,19 @@ if this project is helpful for you, I'll feel nice!
 ### Completed function
 
 1. user login\logout
-      - check the user login status
+    - check the user login status
    
 2. add employee
-      - global exception handler
+    - global exception handler
    
 3. employee pagination queries
-      - Mybatis Plus pagination interceptor
+    - Mybatis Plus pagination interceptor
 
 4. alter employee statu
-      - Jackson Object Mapper
+    - Jackson Object Mapper
    
 5. public fields auto-fill
-      - MetaObjectHandler and session sharing base ThreadLocal 
+    - MetaObjectHandler and session sharing base ThreadLocal 
    
 6. add category
 
@@ -29,9 +29,12 @@ if this project is helpful for you, I'll feel nice!
 9. aliyun SMS service
 
 10. Address book management
-      - save new address 
-      - set default address 
-      - show address list
+    - save new address
+    - set default address 
+    - show address list
+11. shopping cart management
+    - add into shopping cart
+    - remove shopping cart data
 ### The technology involved
 
 frontend < --RESTful API-- > backend

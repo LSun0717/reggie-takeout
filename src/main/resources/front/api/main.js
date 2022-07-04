@@ -27,7 +27,7 @@ function setmealListApi(data) {
 //获取购物车内商品的集合
 function cartListApi(data) {
     return $axios({
-        'url': '/front/cartData.json',
+        'url': '/shoppingCart/list',
         'method': 'get',
         params:{...data}
     })
